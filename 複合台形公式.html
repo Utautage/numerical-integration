@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>数値積分 複合台形公式</title>
+    <script type="text/javascript">
+        // 複合台形公式（3EI　No.21 福嶋孝太）
+        const N = 1e10;
+        const trueValue = 0.5;
+        const f = x => 1.0 / (x * x);
+        // メイン関数
+        function main() {
+            let x;
+            let y = 0;
+            let x0 = 1, xn = 2;
+            let h = (xn - x0) / N;
+            let res = 0;
+            let startTime = performance.now();
+
+            for (let i = 1; i < N; i++) {
+                x = x0 + i * h
+                y += f(x);
+            }
+
+            res = (f(x0) + 2 * y + f(xn)) * h / 2;
+            let err = Math.abs(res - trueValue);
+            let pastTime = performance.now() - startTime;
+            text = "近似解：" + Number(res).toExponential(20) + "<br>";
+            text += "誤差：" + Number(err).toExponential(20) + "<br>";
+            text += "分割数：" + Number(N).toExponential(3) + "<br>";
+            text += "実行時間：" + (pastTime) + "ms<br>";
+            text += "提出：福嶋孝太<br>";
+            document.getElementById("TEXT").innerHTML = text;
+        }
+    </script>
+</head>
+
+<body onLoad="main()">
+    <div id="TEXT"></div>
+</body>
+
+</html>
